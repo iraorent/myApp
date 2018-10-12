@@ -12,97 +12,101 @@ const BACKEND_URL = environment.apiUrl + "/permissions/";
 @Injectable({ providedIn: "root" })
 export class PermissionService {
   private permissions: Permission[] = [];
-  // private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
+  private permissionsUpdated = new Subject<{ permissions: Permission[]; permissionCount: number }>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // getPosts(postsPerPage: number, currentPage: number) {
-  //   debugger
-  //   const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
-  //   this.http
-  //     .get<{ message: string; posts: any; maxPosts: number }>(
-  //       BACKEND_URL + queryParams
-  //     )
-  //     .pipe(
-  //       map(postData => {
-  //         return {
-  //           posts: postData.posts.map(post => {
-  //             return {
-  //               title: post.title,
-  //               content: post.content,
-  //               id: post._id,
-  //               imagePath: post.imagePath,
-  //               creator: post.creator
-  //             };
-  //           }),
-  //           maxPosts: postData.maxPosts
-  //         };
-  //       })
-  //     )
-  //     .subscribe(transformedPostData => {
-  //       this.posts = transformedPostData.posts;
-  //       this.postsUpdated.next({
-  //         posts: [...this.posts],
-  //         postCount: transformedPostData.maxPosts
-  //       });
-  //     });
-  // }
+  
+  getPermissions(permissionsPerPage: number, currentPage: number) {
+    debugger
+    const queryParams = `?pagesize=${permissionsPerPage}&page=${currentPage}`;
+    this.http
+      .get<{ message: string; permissions: any; maxPermissions: number }>(
+        BACKEND_URL + queryParams
+      )
+      .pipe(
+        map(permissionData => {
+          return {
+            permissions: permissionData.permissions.map(permission => {
+              return {
+                id: permission._id,
+                module: permission.module,
+                name: permission.name,
+                description: permission.description,
+                creator: permission.creator
+              };
+            }),
+            maxPermissions: permissionData.maxPermissions
+          };
+        })
+      )
+      .subscribe(transformedPermissionData => {
+        this.permissions = transformedPermissionData.permissions;
+        this.permissionsUpdated.next({
+          permissions: [...this.permissions],
+          permissionCount: transformedPermissionData.maxPermissions
+        });
+      });
+  }
 
-  // getPostUpdateListener() {
-  //   debugger
-  //   return this.postsUpdated.asObservable();
-  // }
+  getPermissionUpdateListener() {
+    debugger
+    return this.permissionsUpdated.asObservable();
+  }
 
-  // getPost(id: string) {
-  //   return this.http.get<{
-  //     _id: string;
-  //     title: string;
-  //     content: string;
-  //     imagePath: string;
-  //     creator: string;
-  //   }>(BACKEND_URL + id);
-  // }
+  getPermission(id: string) {
+    return this.http.get<{
+      _id: string;
+      module: string;
+      name: string;
+      description: string;
+      creator: string;
+    }>(BACKEND_URL + id);
+  }
 
-  // addPost(title: string, content: string, image: File) {
-  //   const postData = new FormData();
-  //   postData.append("title", title);
-  //   postData.append("content", content);
-  //   postData.append("image", image, title);
-  //   this.http
-  //     .post<{ message: string; post: Post }>(
-  //       BACKEND_URL,
-  //       postData
-  //     )
-  //     .subscribe(responseData => {
-  //       this.router.navigate(["/"]);
-  //     });
-  // }
 
-  // updatePost(id: string, title: string, content: string, image: File | string) {
-  //   let postData: Post | FormData;
-  //   if (typeof image === "object") {
-  //     postData = new FormData();
-  //     postData.append("id", id);
-  //     postData.append("title", title);
-  //     postData.append("content", content);
-  //     postData.append("image", image, title);
-  //   } else {
-  //     postData = {
-  //       id: id,
-  //       title: title,
-  //       content: content,
-  //       imagePath: image,
-  //       creator: null
-  //     };
-  //   }
-  //   this.http
-  //     .put(BACKEND_URL + id, postData)
-  //     .subscribe(response => {
-  //       this.router.navigate(["/"]);
-  //     });
-  // }
+  addPermission(module: string, name: string, description: string) {
+  
+    debugger
+    var permissionData;
 
-  // deletePost(postId: string) {
-  //   return this.http.delete(BACKEND_URL + postId);
-  // }
+    permissionData = {
+      module: module,
+      name: name,
+      description: description,
+      creator:null
+    };
+
+    this.http
+      .post<{ message: string; permission: Permission }>(
+        BACKEND_URL,
+        permissionData
+      )
+      .subscribe(responseData => {
+        debugger
+        this.router.navigate(["/"]);
+      });
+  }
+
+  updatePermission(id: string, module: string, name: string, description: string) {
+    let permissionData: Permission | FormData;
+
+    permissionData = {
+      id: id,
+      module: module,
+      name: name,
+      description: description,
+      creator:null
+    };
+
+    this.http
+      .put(BACKEND_URL + id, permissionData)
+      .subscribe(response => {
+        this.router.navigate(["/"]);
+      });
+  }
+
+  deletePermission(permissionId: string) {
+    return this.http.delete(BACKEND_URL + permissionId);
+  }
 }

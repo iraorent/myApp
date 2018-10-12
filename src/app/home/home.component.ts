@@ -10,14 +10,13 @@ import { AuthService } from "../auth/auth.service";
   styleUrls: ["./home.component.css"] 
 })
 
-
 export class HomeComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
   private permissionId: string;
   private authStatusSub: Subscription;
-
+ 
   constructor(
     public route: ActivatedRoute,
     private authService: AuthService

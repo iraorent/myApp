@@ -3,4 +3,5 @@ export interface Permission {
   module: string;
   name: string;
   description: string;
+  creator: string;
 }

@@ -1,30 +1,23 @@
 const mongoose = require("mongoose");
 
 const permissionSchema = mongoose.Schema({
-  module: { type: String, required: true },
-
-  name: { type: String, required: true },
-
-  description: { type: String, required: true },
-
-  isActive: {
-    type: Boolean,
-    default: true
+  module: { 
+    type: String, 
+    required: true 
   },
 
-  createdDate: {
-    type: Date,
-    default: Date.now
+  name: { 
+    type: String, 
+    required: true 
   },
 
-  createdBy: {
+  description: { 
     type: String,
-    required: true
+    required: true 
   },
 
-  updatedDate: Date,
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 
-  updatedBy: String
 });
 
 module.exports = mongoose.model("Permission", permissionSchema);

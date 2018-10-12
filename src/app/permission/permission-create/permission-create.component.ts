@@ -17,7 +17,6 @@ import { AuthService } from "../../auth/auth.service";
 
 export class PermissionCreateComponent implements OnInit, OnDestroy {
 
-
   permission: Permission;
   isLoading = false;
   form: FormGroup;
@@ -33,7 +32,7 @@ export class PermissionCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    debugger
+
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(authStatus => {
@@ -84,30 +83,33 @@ export class PermissionCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSavePost() {
+  onSavePermission() {
 
-    ////Validate Form Input
-    //if (this.form.invalid) {
-    //  return;
-    //}
+    debugger
+    //Validate Form Input
+    if (this.form.invalid) {
+     return;
+    }
 
-    //this.isLoading = true;
+    this.isLoading = true;
 
-    //if (this.mode === "create") {
-    //  this.permissionService.addPost(
-    //    this.form.value.module,
-    //    this.form.value.name,
-    //    this.form.value.description
-    //  );
-    //} else {
-    //  this.permissionService.updatePost(
-    //    this.permissionId,
-    //    this.form.value.module,
-    //    this.form.value.name,
-    //    this.form.value.description
-    //  );
-    //}
-    //this.form.reset();
+    if (this.mode === "create") {
+      var fValue = this.form.value;
+      debugger
+     this.permissionService.addPermission(
+       this.form.value.module,
+       this.form.value.name,
+       this.form.value.description
+     );
+    } else {
+     this.permissionService.updatePermission(
+       this.permissionId,
+       this.form.value.module,
+       this.form.value.name,
+       this.form.value.description
+     );
+    }
+    this.form.reset();
   }
 
   ngOnDestroy() {
