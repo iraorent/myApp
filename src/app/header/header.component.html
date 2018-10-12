@@ -1,0 +1,133 @@
+<mat-toolbar color="primary" fxLayout="row">
+  <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+    <mat-nav-list>
+      <!--<a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>-->
+      <button class="sidenav-toggle mat-button" mat-button (click)="close('toggle button')">
+        <mat-icon>arrow_left</mat-icon>
+        idealFramework
+      </button>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header color="primary">
+          <mat-panel-title>
+            User Management
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <a mat-list-item routerLink="users/create" routerLinkActive="mat-accent" (click)="close('toggle button')">Users</a>
+        <a mat-list-item routerLink="." routerLinkActive="mat-accent" (click)="close('toggle button')">Roles</a>
+        <a mat-list-item routerLink="." routerLinkActive="mat-accent" (click)="close('toggle button')">Permissions</a>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            User Management
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <a mat-list-item routerLink=".">Users</a>
+        <a mat-list-item routerLink=".">Roles</a>
+        <a mat-list-item routerLink=".">Permissions</a>
+      </mat-expansion-panel>
+    </mat-nav-list>
+  </mat-sidenav>
+
+
+ 
+  <button *ngIf="userIsAuthenticated" mat-icon-button (click)="sidenav.open()" fxHide.md fxHide.lg fxHide.xl><mat-icon>menu</mat-icon></button>
+  <ul *ngIf="userIsAuthenticated" fxHide.xs fxHide.sm>
+    <li>
+      
+      <a mat-button routerLink="homes/dashboard">
+        <mat-icon>home</mat-icon>
+        idealFramework
+      </a>
+    </li>
+    <li>
+      <button mat-button [matMenuTriggerFor]="admin">Admin</button>
+      <mat-menu #admin="matMenu">
+        <button mat-menu-item routerLink="/create" routerLinkActive="mat-accent">Users</button>
+        <button mat-menu-item routerLink="/create" routerLinkActive="mat-accent">Roles</button>
+        <button mat-menu-item routerLink="/create" routerLinkActive="mat-accent">Permissions</button>
+      </mat-menu>
+    </li>
+    <li>
+      <button mat-button [matMenuTriggerFor]="animals">Animal index</button>
+      <mat-menu #animals="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
+        <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
+      </mat-menu>
+      <mat-menu #vertebrates="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="fish">Fishes</button>
+        <button mat-menu-item [matMenuTriggerFor]="amphibians">Amphibians</button>
+        <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>
+        <button mat-menu-item>Birds</button>
+        <button mat-menu-item>Mammals</button>
+      </mat-menu>
+      <mat-menu #invertebrates="matMenu">
+        <button mat-menu-item routerLink="/create" routerLinkActive="mat-accent">New Post</button>
+        <button mat-menu-item>Molluscs</button>
+        <button mat-menu-item>Crustaceans</button>
+        <button mat-menu-item>Corals</button>
+        <button mat-menu-item>Arachnids</button>
+        <button mat-menu-item>Velvet worms</button>
+        <button mat-menu-item>Horseshoe crabs</button>
+      </mat-menu>
+      <mat-menu #fish="matMenu">
+        <button mat-menu-item>Baikal oilfish</button>
+        <button mat-menu-item>Bala shark</button>
+        <button mat-menu-item>Ballan wrasse</button>
+        <button mat-menu-item>Bamboo shark</button>
+        <button mat-menu-item>Banded killifish</button>
+      </mat-menu>
+      <mat-menu #amphibians="matMenu">
+        <button mat-menu-item>Sonoran desert toad</button>
+        <button mat-menu-item>Western toad</button>
+        <button mat-menu-item>Arroyo toad</button>
+        <button mat-menu-item>Yosemite toad</button>
+      </mat-menu>
+      <mat-menu #reptiles="matMenu">
+        <button mat-menu-item>Banded Day Gecko</button>
+        <button mat-menu-item>Banded Gila Monster</button>
+        <button mat-menu-item>Black Tree Monitor</button>
+        <button mat-menu-item>Blue Spiny Lizard</button>
+        <button mat-menu-item disabled>Velociraptor</button>
+      </mat-menu>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="posts/lists" routerLinkActive="mat-accent">Posts</a>
+    </li>
+
+    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="posts/create" routerLinkActive="mat-accent">New Post</a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="users/create" routerLinkActive="mat-accent">New User</a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="permissions/create" routerLinkActive="mat-accent">New Permission</a>
+    </li>
+  </ul>
+  <span class="spacer"></span>
+  <ul>
+    <li *ngIf="!userIsAuthenticated">
+      <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent">
+        <mat-icon>person_outline</mat-icon>
+        Login
+      </a>
+    </li>
+    <li *ngIf="!userIsAuthenticated">
+      <a mat-button routerLink="/auth/signup" routerLinkActive="mat-accent">
+        <mat-icon>how_to_reg</mat-icon>
+        Signup
+      </a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      
+      <a mat-button (click)="onLogout()" routerLinkActive="mat-accent">
+        <mat-icon>directions_run</mat-icon>
+        Logout
+      </a>
+    </li>
+  </ul>
+</mat-toolbar>
+

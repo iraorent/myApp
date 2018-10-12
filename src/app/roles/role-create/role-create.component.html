@@ -1,0 +1,47 @@
+<mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="onSaveUser()" *ngIf="!isLoading">
+
+        <mat-tab-group>
+            <mat-tab label="Basic Info">
+            
+              <ng-template matTabContent>
+                  <br>
+                <div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxLayout.sm="column">
+                    <mat-form-field fxFlexFill="100%"  fxFlex.md="50" fxFlex.lg="50">
+                        <input matInput type="text" formControlName="name" placeholder="Login Name">
+                        <mat-error *ngIf="form.get('name').invalid">Please enter a valid Login Name.</mat-error>
+                    </mat-form-field>
+                   
+                    <mat-form-field fxFlexFill="100%"  fxFlex.md="50" fxFlex.lg="50">
+                            <input matInput type="email" formControlName="email" placeholder="Email">
+                            <mat-error *ngIf="form.get('email').invalid">Please enter a valid Email.</mat-error>
+                    </mat-form-field>
+                    
+                </div>
+                <div fxLayout="column" fxLayoutGap="10px" >
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="emp" placeholder="Employee">
+                        <mat-error *ngIf="form.get('emp').invalid">Please enter a valid Employee.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="role" placeholder="Role">
+                        <mat-error *ngIf="form.get('role').invalid">Please enter a valid Role.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <textarea matInput rows="4" formControlName="remarks" placeholder="Remarks"></textarea>
+                        <mat-error *ngIf="form.get('remarks').invalid">Please enter a valid Remarks.</mat-error>
+                    </mat-form-field>
+                </div> 
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Company & Department">
+              <ng-template matTabContent>
+                The Second Content
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+          <button mat-raised-button color="primary" type="submit">Save</button>
+      
+    </form>
+  </mat-card>
