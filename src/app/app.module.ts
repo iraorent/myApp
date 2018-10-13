@@ -16,6 +16,7 @@ import { RoleModule } from "./roles/role.module";
 import { PermissionModule } from "./permission/permission.module";
 import { HomeModule } from "./home/home.module";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { HomeModule } from "./home/home.module";
     RoleModule,
     PermissionModule,
     HomeModule,
+    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
